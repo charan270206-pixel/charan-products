@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Product | CHARAN CPMS</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+    --bg: #070d1d;
+    --purple: #8055ff;
+    --blue: #38bdf8;
+    --white: #f8fafc;
+    --muted: #a9b7d0;
+    --border: #293958;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--white);
+    background:
+        radial-gradient(ellipse at 0% 15%, #32145b55, transparent 40%),
+        radial-gradient(ellipse at 100% 75%, #073d6850, transparent 40%),
+        var(--bg);
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 17px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: rgba(7,13,29,.96);
+    border-bottom: 1px solid #263866;
+    backdrop-filter: blur(14px);
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 900;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.logo span { color: var(--purple); }
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.links a {
+    color: #d8e2f8;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+.links a:hover,
+.links a.active {
+    background: var(--purple);
+    color: white;
+}
+
+/* HERO */
+.hero {
+    text-align: center;
+    padding: 50px 20px 25px;
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 30px;
+    border: 1px solid #38bdf855;
+    background: #38bdf810;
+    color: #7dd3fc;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(35px, 5vw, 49px);
+    margin-bottom: 15px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 620px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* MAIN LAYOUT */
+.layout {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px 5% 65px;
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.panel {
+    background: linear-gradient(145deg, #121e39, #0b1429);
+    border: 1px solid #293958;
+    border-radius: 20px;
+    box-shadow: 0 18px 45px #0002;
+}
+
+.info-panel { padding: 28px 24px; }
+.form-panel { padding: 30px; }
+
+.icon-box {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #703cff, #2563eb);
+    font-size: 27px;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 30px #6038db30;
+}
+
+.info-panel h2 {
+    font-size: 25px;
+    margin-bottom: 14px;
+}
+
+.info-panel > p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.info-list {
+    display: grid;
+    gap: 17px;
+    margin-top: 28px;
+}
+
+.info-item {
+    display: flex;
+    gap: 13px;
+    align-items: flex-start;
+}
+
+.tick {
+    width: 29px;
+    height: 29px;
+    min-width: 29px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    color: #a78bfa;
+    background: #8055ff22;
+    font-weight: bold;
+}
+
+.info-item h3 {
+    font-size: 13px;
+    margin: 4px 0 6px;
+}
+
+.info-item p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.tip {
+    padding: 15px;
+    margin-top: 28px;
+    border: 1px solid #38bdf830;
+    border-radius: 12px;
+    background: #38bdf810;
+    color: #c8eaff;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.form-heading { margin-bottom: 26px; }
+
+.small-title {
+    color: #a78bfa;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.form-heading h2 {
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+.form-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.form-group { margin-bottom: 20px; }
+
+label {
+    display: block;
+    color: #e2e8f8;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #344563;
+    border-radius: 10px;
+    color: white;
+    background: #091328;
+    font-size: 14px;
+    outline: none;
+    transition: .25s;
+}
+
+select { cursor: pointer; }
+
+select option {
+    color: white;
+    background: #101a32;
+}
+
+input::placeholder { color: #7f8ca7; }
+
+input:focus, select:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #8055ff20;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.helper {
+    color: #8494b0;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 8px;
+}
+
+.load-btn, .save-btn, .reset-btn {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.load-btn {
+    color: white;
+    border: 1px solid #7c5cff;
+    background: linear-gradient(100deg, #713cff, #365fff);
+}
+
+.save-btn {
+    color: white;
+    border: 1px solid #0ea5e9;
+    background: linear-gradient(100deg, #0891b2, #2563eb);
+}
+
+.reset-btn {
+    margin-top: 11px;
+    color: #dbeafe;
+    border: 1px solid #344563;
+    background: transparent;
+}
+
+.load-btn:hover, .save-btn:hover, .reset-btn:hover {
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#editArea {
+    border-top: 1px solid #293958;
+    margin-top: 27px;
+    padding-top: 26px;
+}
+
+#editArea[hidden] { display: none; }
+
+.product-preview {
+    padding: 16px;
+    margin-bottom: 22px;
+    border: 1px solid #38bdf830;
+    background: #38bdf810;
+    border-radius: 12px;
+}
+
+.preview-label {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.product-preview h3 {
+    font-size: 17px;
+    overflow-wrap: anywhere;
+}
+
+#msg {
+    display: none;
+    margin-top: 18px;
+    padding: 13px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+#msg.success {
+    display: block;
+    background: #16a34a18;
+    border: 1px solid #22c55e55;
+    color: #86efac;
+}
+
+#msg.error {
+    display: block;
+    background: #ef444418;
+    border: 1px solid #ef444455;
+    color: #fca5a5;
+}
+
+footer {
+    border-top: 1px solid #263653;
+    padding: 24px;
+    text-align: center;
+    color: #95a5c1;
+    font-size: 12px;
+    line-height: 2;
+}
+
+footer strong { color: white; }
+footer span { color: #9875ff; }
+
+@media(max-width: 850px) {
+    nav { justify-content: center; }
+    .links { justify-content: center; }
+
+    .layout {
+        grid-template-columns: 1fr;
+        max-width: 680px;
+    }
+}
+
+@media(max-width: 550px) {
+    nav { padding: 14px 4%; }
+    .links a { padding: 8px; font-size: 11px; }
+    .hero { padding: 40px 6% 20px; }
+    .layout { padding: 18px 5% 45px; }
+    .info-panel, .form-panel { padding: 23px 19px; }
+    .row { grid-template-columns: 1fr; gap: 0; }
+    .form-heading h2 { font-size: 23px; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="logo">CHARAN <span>| CPMS</span></a>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="add-product.html">Add Product</a>
+        <a href="search.html">Search</a>
+        <a href="booking.html">Booking</a>
+        <a href="update.html" class="active">Update</a>
+        <a href="delete.html">Delete</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About Us</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <span class="eyebrow">INVENTORY MANAGEMENT</span>
+    <h1>Update <span class="gradient">Product Details</span></h1>
+    <p>
+        Select a product from your inventory, load its current details,
+        make the required changes and save your updates securely.
+    </p>
+</header>
+
+<main class="layout">
+
+    <section class="panel info-panel">
+        <div class="icon-box">✏️</div>
+
+        <h2>Manage Your Products</h2>
+
+        <p>
+            Keep product information accurate and up to date.
+            Update names, prices, available stock and reorder levels
+            through one simple interface.
+        </p>
+
+        <div class="info-list">
+            <div class="info-item">
+                <div class="tick">✓</div>
+                <div>
+                    <h3>Easy Product Selection</h3>
+                    <p>Choose a product from the dropdown list or enter its ID.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="tick">✓</div>
+                <div>
+                    <h3>Update Inventory Details</h3>
+                    <p>Edit product name, price, stock quantity and reorder level.</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="tick">✓</div>
+                <div>
+                    <h3>Validate Before Saving</h3>
+                    <p>Required fields and number values are checked before submission.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tip">
+            💡 <strong>Quick tip:</strong><br>
+            Load the product first. Verify its existing details before
+            making changes and clicking Save Changes.
+        </div>
+    </section>
+
+    <section class="panel form-panel">
+        <div class="form-heading">
+            <div class="small-title">PRODUCT CONTROL PANEL</div>
+            <h2>Update Product</h2>
+            <p>Select a product to retrieve its existing details.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="productSelect">Select Product *</label>
+            <select id="productSelect">
+                <option value="">Loading products...</option>
+            </select>
+            <p class="helper">Product options are retrieved from your database.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="id">Or Enter Product ID</label>
+            <input
+                id="id"
+                type="number"
+                min="1"
+                step="1"
+                placeholder="Enter product ID manually">
+        </div>
+
+        <button type="button" class="load-btn" id="loadBtn">
+            ↻ Load Product Details
+        </button>
+
+        <div id="editArea" hidden>
+            <div class="product-preview">
+                <div class="preview-label">CURRENT PRODUCT</div>
+                <h3 id="previewName">Product name</h3>
+                <p class="helper" id="previewId"></p>
+            </div>
+
+            <form id="form">
+                <div class="form-group">
+                    <label for="name">Product Name *</label>
+                    <input
+                        id="name"
+                        type="text"
+                        maxlength="100"
+                        placeholder="Enter product name"
+                        required>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="price">Product Price (₹) *</label>
+                        <input
+                            id="price"
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            placeholder="e.g. 499.00"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quality">Stock / Quality *</label>
+                        <input
+                            id="quality"
+                            type="number"
+                            min="0"
+                            step="1"
+                            placeholder="Available stock"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="level">Reorder Level *</label>
+                    <input
+                        id="level"
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="Minimum stock level"
+                        required>
+                    <p class="helper">
+                        A low-stock reminder can be based on this value.
+                    </p>
+                </div>
+
+                <button type="submit" class="save-btn" id="saveBtn">
+                    ✓ Save Changes
+                </button>
+
+                <button type="button" class="reset-btn" id="cancelBtn">
+                    Cancel Editing
+                </button>
+            </form>
+        </div>
+
+        <p id="msg" role="status" aria-live="polite"></p>
+    </section>
+
+</main>
+
+<footer>
+    <strong>CHARAN <span>| CPMS</span></strong><br>
+    Products Management System<br>
+    © <span id="year"></span> CHARAN CPMS. All rights reserved.
+</footer>
+
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+const byId = id => document.getElementById(id);
+
+const productSelect = byId("productSelect");
+const idInput = byId("id");
+const editArea = byId("editArea");
+const form = byId("form");
+const msg = byId("msg");
+const loadBtn = byId("loadBtn");
+const saveBtn = byId("saveBtn");
+const cancelBtn = byId("cancelBtn");
+
+let products = [];
+let loadedProductId = null;
+
+function showMessage(message, type = "") {
+    msg.textContent = message;
+    msg.className = type;
+    msg.style.display = "block";
+}
+
+function clearMessage() {
+    msg.textContent = "";
+    msg.className = "";
+    msg.style.display = "none";
+}
+
+function getProductId(product) {
+    return product.product_id ?? product.id;
+}
+
+async function requestJSON(url, options = {}) {
+    const response = await fetch(url, options);
+    const text = await response.text();
+
+    let result = {};
+
+    if (text) {
+        try {
+            result = JSON.parse(text);
+        } catch {
+            throw new Error(
+                `Invalid server response (HTTP ${response.status}).`
+            );
+        }
+    }
+
+    if (!response.ok) {
+        throw new Error(
+            result.error || result.message ||
+            `Request failed (HTTP ${response.status}).`
+        );
+    }
+
+    return result;
+}
+
+async function loadProductList() {
+    productSelect.innerHTML =
+        '<option value="">Loading products...</option>';
+
+    try {
+        const data = await requestJSON("/api/products");
+
+        products = Array.isArray(data)
+            ? data
+            : (data.products || []);
+
+        productSelect.innerHTML =
+            '<option value="">-- Select a product --</option>';
+
+        products.forEach(product => {
+            const id = getProductId(product);
+            const name = product.product_name ?? product.name ?? "Unnamed product";
+
+            if (id == null) return;
+
+            const option = document.createElement("option");
+            option.value = id;
+            option.textContent = "ID " + id + " - " + name;
+            productSelect.appendChild(option);
+        });
+
+        if (products.length === 0) {
+            productSelect.innerHTML =
+                '<option value="">No products available</option>';
+        }
+    } catch (error) {
+        productSelect.innerHTML =
+            '<option value="">Could not load products</option>';
+
+        showMessage(
+            error.message === "Failed to fetch"
+                ? "Server connection failed. Please start your Node.js server."
+                : error.message,
+            "error"
+        );
+    }
+}
+
+productSelect.addEventListener("change", function() {
+    clearMessage();
+
+    if (productSelect.value) {
+        idInput.value = productSelect.value;
+    }
+});
+
+idInput.addEventListener("input", function() {
+    clearMessage();
+
+    if (idInput.value !== productSelect.value) {
+        productSelect.value = "";
+    }
+});
+
+async function loadProduct() {
+    clearMessage();
+
+    const id = Number(idInput.value);
+
+    if (!Number.isSafeInteger(id) || id < 1) {
+        showMessage("Please select a product or enter a valid product ID.", "error");
+        return;
+    }
+
+    loadBtn.disabled = true;
+    loadBtn.textContent = "Loading...";
+    editArea.hidden = true;
+    loadedProductId = null;
+
+    try {
+        const product = await requestJSON(
+            "/api/products/" + encodeURIComponent(id)
+        );
+
+        if (
+            product.product_name === undefined ||
+            product.product_price === undefined
+        ) {
+            throw new Error("Unexpected product data. Please check server.js.");
+        }
+
+        byId("name").value = product.product_name;
+        byId("price").value = product.product_price;
+        byId("quality").value = product.product_quality ?? 0;
+        byId("level").value = product.reorder_level ?? 0;
+
+        byId("previewName").textContent = product.product_name;
+        byId("previewId").textContent = "Product ID: " + id;
+
+        loadedProductId = id;
+        editArea.hidden = false;
+
+        showMessage("Product loaded successfully. You can now edit the details.", "success");
+
+    } catch (error) {
+        showMessage(error.message || "Unable to load product.", "error");
+    } finally {
+        loadBtn.disabled = false;
+        loadBtn.textContent = "↻ Load Product Details";
+    }
+}
+
+loadBtn.addEventListener("click", loadProduct);
+
+idInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        loadProduct();
+    }
+});
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+    clearMessage();
+
+    if (loadedProductId === null) {
+        showMessage("Please load a product before saving changes.", "error");
+        return;
+    }
+
+    if (!form.reportValidity()) return;
+
+    const data = {
+        product_name: byId("name").value.trim(),
+        product_price: Number(byId("price").value),
+        product_quality: Number(byId("quality").value),
+        reorder_level: Number(byId("level").value)
+    };
+
+    if (!data.product_name) {
+        showMessage("Product name cannot be empty.", "error");
+        return;
+    }
+
+    if (!Number.isFinite(data.product_price) ||
+        data.product_price <= 0) {
+        showMessage("Enter a valid product price greater than zero.", "error");
+        return;
+    }
+
+    if (!Number.isSafeInteger(data.product_quality) ||
+        data.product_quality < 0 ||
+        !Number.isSafeInteger(data.reorder_level) ||
+        data.reorder_level < 0) {
+        showMessage("Stock and reorder level must be whole numbers of 0 or more.", "error");
+        return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Saving changes...";
+
+    try {
+        const result = await requestJSON(
+            "/api/products/" + encodeURIComponent(loadedProductId),
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            }
+        );
+
+        showMessage(
+            result.message || "Product updated successfully!",
+            "success"
+        );
+
+        byId("previewName").textContent = data.product_name;
+
+        await loadProductList();
+        productSelect.value = String(loadedProductId);
+        idInput.value = String(loadedProductId);
+
+    } catch (error) {
+        showMessage(error.message || "Unable to update product.", "error");
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "✓ Save Changes";
+    }
+});
+
+cancelBtn.addEventListener("click", function() {
+    editArea.hidden = true;
+    loadedProductId = null;
+    clearMessage();
+});
+
+loadProductList();
+</script>
+
+</body>
+</html>

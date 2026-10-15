@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHARAN | CPMS Products</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f3f6fc;color:#172033}
+nav{background:#10172a;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.logo{font-size:23px;font-weight:bold;color:#38bdf8}
+.logo span{color:white}
+.links{display:flex;gap:15px;flex-wrap:wrap}
+.links a{color:white;text-decoration:none;font-size:13px;font-weight:bold}
+.links a:hover,.links a.active{color:#38bdf8}
+.hero{padding:45px 5%;background:linear-gradient(120deg,#111827,#1d4ed8,#6d28d9);color:white}
+.hero small{color:#bae6fd;letter-spacing:2px;font-weight:bold}
+.hero h1{font-size:clamp(30px,4vw,43px);margin:15px 0}
+.hero p{max-width:680px;line-height:1.8;color:#e2e8f0}
+main{max-width:1400px;margin:auto;padding:32px 5%}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-bottom:28px}
+.stat{background:white;padding:22px;border-radius:14px;box-shadow:0 4px 18px #0000000a;border:1px solid #e5eaf2}
+.stat p{color:#64748b;font-size:13px;margin:10px 0}
+.stat h2{font-size:25px;color:#1e3a8a;overflow-wrap:anywhere}
+.stat-icon{font-size:27px}
+.panel{background:white;padding:22px;border:1px solid #e2e8f0;border-radius:14px;box-shadow:0 4px 18px #00000008}
+.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.panel-heading h2{font-size:21px}
+.add-btn{background:#7c3aed;color:white;text-decoration:none;padding:12px 15px;border-radius:8px;font-size:13px;font-weight:bold}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px}
+input,select{width:100%;padding:13px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;background:white;outline:none}
+input:focus,select:focus{border-color:#2563eb;box-shadow:0 0 0 3px #2563eb18}
+button{border:0;cursor:pointer;padding:13px 17px;border-radius:8px;font-size:14px;font-weight:bold}
+.refresh{background:#2563eb;color:white}
+.refresh:hover{background:#1d4ed8}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0 18px}
+.heading h2{font-size:25px}
+#msg{color:#64748b;font-size:14px;margin-top:15px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.card{background:white;border-radius:15px;overflow:hidden;border:1px solid #e2e8f0;box-shadow:0 5px 20px #0000000a;transition:.25s}
+.card:hover{transform:translateY(-5px);box-shadow:0 12px 28px #00000015}
+.image-box{height:220px;position:relative;background:linear-gradient(135deg,#dbeafe,#ede9fe);overflow:hidden}
+.product-image{width:100%;height:100%;object-fit:cover;display:block}
+.image-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:58px}
+.id-tag{position:absolute;top:12px;left:12px;background:#10172ae8;color:white;padding:7px 11px;border-radius:20px;font-size:12px;z-index:2}
+.card-body{padding:20px}
+.card h3{font-size:19px;color:#172554;margin-bottom:12px;overflow-wrap:anywhere}
+.price{font-size:25px;color:#2563eb;font-weight:bold;margin-bottom:18px}
+.detail{display:flex;justify-content:space-between;gap:10px;margin:12px 0;font-size:14px}
+.detail span{color:#64748b}
+.detail strong{text-align:right;overflow-wrap:anywhere}
+.status{display:inline-block;padding:7px 11px;border-radius:20px;font-size:12px;font-weight:bold;margin-top:5px}
+.in-stock{background:#dcfce7;color:#15803d}
+.low-stock{background:#fee2e2;color:#b91c1c}
+.out-stock{background:#fef3c7;color:#92400e}
+.actions{display:flex;gap:10px;margin-top:18px}
+.actions a{flex:1;text-align:center;padding:11px 8px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:13px}
+.update{background:#dbeafe;color:#1d4ed8}
+.delete{background:#fee2e2;color:#b91c1c}
+.empty{grid-column:1/-1;background:white;text-align:center;padding:40px 20px;border-radius:12px;color:#64748b;line-height:1.8}
+.empty h3{color:#172033;margin-bottom:10px}
+footer{background:#10172a;color:#cbd5e1;text-align:center;padding:25px 5%;margin-top:45px;line-height:1.8}
+footer strong{color:#38bdf8}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.filters{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.stats,.grid,.filters{grid-template-columns:1fr}.image-box{height:230px}main{padding:25px 4%}.links{gap:12px}}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">CHARAN <span>| CPMS</span></div>
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="add-product.html">Add Product</a>
+        <a href="search.html">Search</a>
+        <a href="booking.html">Booking</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About Us</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <small>CHARAN PRODUCT MANAGEMENT SYSTEM</small>
+    <h1>Discover Our Products</h1>
+    <p>Manage your products in one place. Check prices, monitor inventory,
+    search products and identify items that need restocking with our
+    simple and professional inventory dashboard.</p>
+</section>
+
+<main>
+
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-icon">📦</div>
+            <p>Total Products</p>
+            <h2 id="totalProducts">0</h2>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">💰</div>
+            <p>Inventory Value</p>
+            <h2 id="totalValue">₹0</h2>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">📊</div>
+            <p>Total Stock Units</p>
+            <h2 id="totalStock">0</h2>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">⚠️</div>
+            <p>Low / Out of Stock</p>
+            <h2 id="lowStock">0</h2>
+        </div>
+    </section>
+
+    <section class="panel">
+        <div class="panel-heading">
+            <h2>🔎 Search & Filter Products</h2>
+            <a class="add-btn" href="add-product.html">＋ Add New Product</a>
+        </div>
+
+        <div class="filters">
+            <input id="q" type="search"
+                   placeholder="Search by product name or ID...">
+
+            <select id="stockFilter">
+                <option value="all">All Stock Status</option>
+                <option value="in">In Stock</option>
+                <option value="low">Low Stock</option>
+                <option value="out">Out of Stock</option>
+            </select>
+
+            <select id="sortFilter">
+                <option value="newest">Newest First</option>
+                <option value="name">Name: A to Z</option>
+                <option value="priceLow">Price: Low to High</option>
+                <option value="priceHigh">Price: High to Low</option>
+                <option value="stock">Stock: Low to High</option>
+            </select>
+
+            <button class="refresh" onclick="loadProducts()">↻ Refresh</button>
+        </div>
+
+        <p id="msg">Loading products...</p>
+    </section>
+
+    <section>
+        <div class="heading">
+            <h2>All Products</h2>
+            <span id="resultCount">Loading...</span>
+        </div>
+
+        <div class="grid" id="list">
+            <div class="empty">⏳ Loading your products...</div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <strong>CHARAN | CPMS</strong><br>
+    Smart Inventory Management Made Simple.<br>
+    © 2026 CHARAN Products Management System. All rights reserved.
+</footer>
+
+<script>
+let products = [];
+
+/* Direct image src URLs for sample products.
+   Change these URLs to your own product images if required. */
+const productImages = {
+    1: "https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=800&q=80",
+    2: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
+    3: "https://media.istockphoto.com/id/928066156/photo/open-refrigerator-in-kitchen.webp?a=1&b=1&s=612x612&w=0&k=20&c=cPLOfJAcDikYg0kL1pwVRzJzwo789h0SBxb_EFSwXuE=",
+    4: "https://media.istockphoto.com/id/1256618106/photo/leather-cricket-ball-resting-on-a-cricket-bat-placed-on-green-grass-cricket-ground-pitch.webp?a=1&b=1&s=612x612&w=0&k=20&c=sFSvkpug_VkcXYVsME8hQuulwrGz7tvAcyjYUrnCJxQ=",
+    5: "https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=800&q=80",
+    6: "https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&q=80",
+    7: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=800&q=80",
+    8: "https://images.unsplash.com/photo-1542291026-7eec264c27aa?auto=format&fit=crop&w=800&q=80"
+};
+
+const defaultImage = productImages[1];
+
+function esc(value) {
+    return String(value ?? "").replace(/[&<>"']/g, c => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+    })[c]);
+}
+
+function stockStatus(p) {
+    const stock = Number(p.product_quality) || 0;
+    const reorder = Number(p.reorder_level) || 0;
+
+    if (stock <= 0) {
+        return { type:"out", text:"Out of Stock", css:"out-stock" };
+    }
+    if (stock <= reorder) {
+        return { type:"low", text:"Low Stock", css:"low-stock" };
+    }
+    return { type:"in", text:"In Stock", css:"in-stock" };
+}
+
+function cardHTML(p) {
+    const image = productImages[Number(p.product_id)] || defaultImage;
+    const status = stockStatus(p);
+    const price = Number(p.product_price) || 0;
+
+    return `
+    <article class="card">
+        <div class="image-box">
+            <div class="image-fallback">📦</div>
+            <span class="id-tag">Product #${esc(p.product_id)}</span>
+            <img class="product-image"
+                 src="${image}"
+                 alt="${esc(p.product_name)}"
+                 loading="lazy"
+                 onload="this.previousElementSibling.style.display='none'"
+                 onerror="this.style.display='none'">
+        </div>
+
+        <div class="card-body">
+            <h3>${esc(p.product_name)}</h3>
+            <div class="price">₹${price.toLocaleString("en-IN",{maximumFractionDigits:2})}</div>
+
+            <div class="detail">
+                <span>Product ID</span>
+                <strong>${esc(p.product_id)}</strong>
+            </div>
+            <div class="detail">
+                <span>Available Stock</span>
+                <strong>${esc(p.product_quality)}</strong>
+            </div>
+            <div class="detail">
+                <span>Reorder Level</span>
+                <strong>${esc(p.reorder_level)}</strong>
+            </div>
+
+            <span class="status ${status.css}">${status.text}</span>
+
+            <div class="actions">
+                <a class="update"
+                   href="update.html?id=${encodeURIComponent(p.product_id)}">✏️ Update</a>
+                <a class="delete"
+                   href="delete.html?id=${encodeURIComponent(p.product_id)}">🗑️ Delete</a>
+            </div>
+        </div>
+    </article>`;
+}
+
+function updateStats() {
+    const stock = products.reduce((sum,p) =>
+        sum + (Number(p.product_quality) || 0), 0);
+
+    const value = products.reduce((sum,p) =>
+        sum + (Number(p.product_price) || 0) *
+              (Number(p.product_quality) || 0), 0);
+
+    const low = products.filter(p => stockStatus(p).type !== "in").length;
+
+    document.getElementById("totalProducts").textContent = products.length;
+    document.getElementById("totalStock").textContent =
+        stock.toLocaleString("en-IN");
+    document.getElementById("totalValue").textContent =
+        "₹" + value.toLocaleString("en-IN",{maximumFractionDigits:2});
+    document.getElementById("lowStock").textContent = low;
+}
+
+function render() {
+    const query = document.getElementById("q").value.trim().toLowerCase();
+    const filter = document.getElementById("stockFilter").value;
+    const sort = document.getElementById("sortFilter").value;
+
+    let result = products.filter(p => {
+        const name = String(p.product_name ?? "").toLowerCase();
+        const id = String(p.product_id ?? "");
+        const status = stockStatus(p).type;
+
+        return (name.includes(query) || id.includes(query)) &&
+               (filter === "all" || filter === status);
+    });
+
+    if (sort === "name") {
+        result.sort((a,b) =>
+            String(a.product_name).localeCompare(String(b.product_name)));
+    } else if (sort === "priceLow") {
+        result.sort((a,b) => Number(a.product_price)-Number(b.product_price));
+    } else if (sort === "priceHigh") {
+        result.sort((a,b) => Number(b.product_price)-Number(a.product_price));
+    } else if (sort === "stock") {
+        result.sort((a,b) => Number(a.product_quality)-Number(b.product_quality));
+    } else {
+        result.sort((a,b) => Number(b.product_id)-Number(a.product_id));
+    }
+
+    document.getElementById("msg").textContent =
+        "Inventory loaded: " + products.length + " product(s).";
+
+    document.getElementById("resultCount").textContent =
+        result.length + " product(s) found";
+
+    document.getElementById("list").innerHTML = result.length
+        ? result.map(cardHTML).join("")
+        : `<div class="empty"><h3>No Products Found</h3>
+           Try another search term or dropdown option.</div>`;
+}
+
+async function loadProducts() {
+    document.getElementById("msg").textContent = "Loading products...";
+    document.getElementById("resultCount").textContent = "Loading...";
+
+    try {
+        const response = await fetch("/api/products");
+
+        if (!response.ok) {
+            throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data)) {
+            throw new Error("API did not return a product array");
+        }
+
+        products = data;
+        updateStats();
+        render();
+
+    } catch (error) {
+        console.error("Product loading error:", error);
+        document.getElementById("msg").textContent =
+            "Unable to load products. Check your server and database.";
+        document.getElementById("resultCount").textContent = "Loading failed";
+        document.getElementById("list").innerHTML = `
+            <div class="empty">
+                <h3>⚠️ Unable to Load Products</h3>
+                Start your Node.js server and verify the MySQL connection.
+                <br>Open http://localhost:3000/products.html
+                <br><br>
+                <button class="refresh" onclick="loadProducts()">Try Again</button>
+            </div>`;
+    }
+}
+
+document.getElementById("q").addEventListener("input", render);
+document.getElementById("stockFilter").addEventListener("change", render);
+document.getElementById("sortFilter").addEventListener("change", render);
+
+loadProducts();
+</script>
+
+</body>
+</html>

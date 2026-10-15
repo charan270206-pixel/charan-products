@@ -1,0 +1,708 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CHARAN | CPMS - Add Product</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6fc;
+    color: #172033;
+}
+
+/* NAVIGATION */
+
+nav {
+    background: #10172a;
+    color: white;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+    color: #38bdf8;
+}
+
+.logo span {
+    color: white;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.links a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.links a:hover,
+.links a.active {
+    color: #38bdf8;
+}
+
+/* HERO */
+
+.hero {
+    background: linear-gradient(120deg, #111827, #1d4ed8, #7c3aed);
+    color: white;
+    padding: 38px 5%;
+}
+
+.hero small {
+    color: #bae6fd;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    margin: 14px 0;
+}
+
+.hero p {
+    max-width: 650px;
+    color: #e2e8f0;
+    line-height: 1.8;
+}
+
+/* PAGE LAYOUT */
+
+.container {
+    max-width: 1150px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.panel {
+    background: white;
+    padding: 28px;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 6px 25px #0f172a0a;
+}
+
+.panel h2 {
+    font-size: 23px;
+    color: #172554;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/* FORM */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 19px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #334155;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    background: white;
+    color: #172033;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px #2563eb18;
+}
+
+.hint {
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+button,
+.button-link {
+    border: 0;
+    border-radius: 9px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.save-btn {
+    background: #2563eb;
+    color: white;
+    flex: 1;
+}
+
+.save-btn:hover {
+    background: #1d4ed8;
+}
+
+.reset-btn {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.save-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+#msg {
+    display: none;
+    padding: 13px;
+    border-radius: 9px;
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+#msg.success {
+    display: block;
+    color: #166534;
+    background: #dcfce7;
+}
+
+#msg.error {
+    display: block;
+    color: #991b1b;
+    background: #fee2e2;
+}
+
+/* SIDE PANEL */
+
+.preview {
+    background: linear-gradient(145deg, #eff6ff, #f5f3ff);
+    border: 1px solid #dbeafe;
+    border-radius: 13px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.preview-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.preview h3 {
+    color: #172554;
+    font-size: 21px;
+    overflow-wrap: anywhere;
+    margin-bottom: 10px;
+}
+
+.preview p {
+    color: #64748b;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+.preview-price {
+    color: #2563eb !important;
+    font-size: 26px !important;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.preview-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #dbeafe;
+    font-size: 14px;
+}
+
+.preview-row span {
+    color: #64748b;
+}
+
+.preview-row strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.status {
+    display: inline-block;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.in-stock {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.low-stock {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.out-stock {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.tips {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 13px;
+    padding: 20px;
+}
+
+.tips h3 {
+    margin-bottom: 14px;
+    color: #172554;
+}
+
+.tips p {
+    color: #64748b;
+    line-height: 1.8;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+/* FOOTER */
+
+footer {
+    background: #10172a;
+    color: #cbd5e1;
+    text-align: center;
+    padding: 25px 5%;
+    margin-top: 45px;
+    line-height: 1.8;
+}
+
+footer strong {
+    color: #38bdf8;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:550px) {
+    nav {
+        padding: 17px 5%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .panel {
+        padding: 20px;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    .links {
+        gap: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo">CHARAN <span>| CPMS</span></div>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="add-product.html" class="active">Add Product</a>
+        <a href="search.html">Search</a>
+        <a href="booking.html">Booking</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About Us</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <small>INVENTORY MANAGEMENT</small>
+    <h1>＋ Add a New Product</h1>
+    <p>Add product details to your inventory. Enter the product name,
+    price, available quantity and reorder level to keep your inventory
+    organised and up to date.</p>
+</section>
+
+<main class="container">
+
+    <div class="layout">
+
+        <!-- PRODUCT FORM -->
+        <section class="panel">
+            <h2>Product Information</h2>
+            <p class="subtitle">
+                Fill in the details below. Fields marked with * are required.
+            </p>
+
+            <form id="form">
+
+                <div class="form-grid">
+
+                    <div class="field full">
+                        <label for="product_name">Product Name *</label>
+                        <input
+                            id="product_name"
+                            name="product_name"
+                            type="text"
+                            maxlength="100"
+                            placeholder="Example: Wireless Headphones"
+                            required>
+                    </div>
+
+                    <div class="field">
+                        <label for="product_price">Product Price (₹) *</label>
+                        <input
+                            id="product_price"
+                            name="product_price"
+                            type="number"
+                            min="0.01"
+                            max="99999999"
+                            step="0.01"
+                            placeholder="Example: 1499.00"
+                            required>
+                    </div>
+
+                    <div class="field">
+                        <label for="product_quality">Stock Quantity *</label>
+                        <input
+                            id="product_quality"
+                            name="product_quality"
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="0"
+                            required>
+                    </div>
+
+                    <div class="field">
+                        <label for="reorder_level">Reorder Level *</label>
+                        <input
+                            id="reorder_level"
+                            name="reorder_level"
+                            type="number"
+                            min="0"
+                            step="1"
+                            value="5"
+                            required>
+                        <span class="hint">Alert threshold for low stock.</span>
+                    </div>
+
+                    <div class="field">
+                        <label for="category">Product Category</label>
+                        <select id="category" name="category">
+                            <option value="Electronics">Electronics</option>
+                            <option value="Accessories">Accessories</option>
+                            <option value="Home Appliances">Home Appliances</option>
+                            <option value="Clothing">Clothing</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="hint">
+                            Category is for the form interface; the current database table does not store it.
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="form-buttons">
+                    <button class="save-btn" id="saveBtn" type="submit">
+                        ✓ Save Product
+                    </button>
+                    <button class="reset-btn" type="reset">
+                        Clear Form
+                    </button>
+                </div>
+
+                <p id="msg" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+
+        <!-- LIVE PREVIEW -->
+        <aside>
+            <section class="panel" style="margin-bottom:20px">
+                <h2>Live Preview</h2>
+                <p class="subtitle">
+                    Preview updates as you enter product information.
+                </p>
+
+                <div class="preview">
+                    <div class="preview-icon">📦</div>
+                    <h3 id="previewName">Your Product Name</h3>
+                    <p>CHARAN Inventory Item</p>
+
+                    <p class="preview-price" id="previewPrice">₹0.00</p>
+
+                    <div class="preview-row">
+                        <span>Stock Quantity</span>
+                        <strong id="previewStock">0</strong>
+                    </div>
+
+                    <div class="preview-row">
+                        <span>Reorder Level</span>
+                        <strong id="previewReorder">5</strong>
+                    </div>
+
+                    <div class="preview-row">
+                        <span>Category</span>
+                        <strong id="previewCategory">Electronics</strong>
+                    </div>
+
+                    <span id="previewStatus" class="status out-stock">
+                        Out of Stock
+                    </span>
+                </div>
+            </section>
+
+            <section class="tips">
+                <h3>💡 Inventory Tips</h3>
+                <p>✓ Enter the correct product name.</p>
+                <p>✓ Price must be greater than zero.</p>
+                <p>✓ Stock quantity cannot be negative.</p>
+                <p>✓ Set a suitable reorder level to monitor stock.</p>
+                <p>✓ After saving, check the Products page.</p>
+            </section>
+        </aside>
+
+    </div>
+</main>
+
+<footer>
+    <strong>CHARAN | CPMS</strong><br>
+    Smart Inventory Management Made Simple.<br>
+    © 2026 CHARAN Products Management System.
+</footer>
+
+<script>
+const form = document.getElementById("form");
+const msg = document.getElementById("msg");
+const saveBtn = document.getElementById("saveBtn");
+
+const nameInput = document.getElementById("product_name");
+const priceInput = document.getElementById("product_price");
+const stockInput = document.getElementById("product_quality");
+const reorderInput = document.getElementById("reorder_level");
+const categoryInput = document.getElementById("category");
+
+function showMessage(text, type) {
+    msg.textContent = text;
+    msg.className = type;
+}
+
+function updatePreview() {
+    const name = nameInput.value.trim();
+    const price = Number(priceInput.value) || 0;
+    const stock = Number(stockInput.value) || 0;
+    const reorder = Number(reorderInput.value) || 0;
+
+    document.getElementById("previewName").textContent =
+        name || "Your Product Name";
+
+    document.getElementById("previewPrice").textContent =
+        "₹" + price.toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+    document.getElementById("previewStock").textContent = stock;
+    document.getElementById("previewReorder").textContent = reorder;
+
+    document.getElementById("previewCategory").textContent =
+        categoryInput.value;
+
+    const status = document.getElementById("previewStatus");
+
+    if (stock <= 0) {
+        status.textContent = "Out of Stock";
+        status.className = "status out-stock";
+    } else if (stock <= reorder) {
+        status.textContent = "Low Stock";
+        status.className = "status low-stock";
+    } else {
+        status.textContent = "In Stock";
+        status.className = "status in-stock";
+    }
+}
+
+[nameInput, priceInput, stockInput, reorderInput, categoryInput]
+    .forEach(input => {
+        input.addEventListener("input", updatePreview);
+        input.addEventListener("change", updatePreview);
+    });
+
+form.addEventListener("reset", () => {
+    setTimeout(() => {
+        msg.textContent = "";
+        msg.className = "";
+        updatePreview();
+    }, 0);
+});
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    const data = {
+        product_name: nameInput.value.trim(),
+        product_price: Number(priceInput.value),
+        product_quality: Number(stockInput.value),
+        reorder_level: Number(reorderInput.value)
+    };
+
+    if (!data.product_name) {
+        showMessage("Please enter a product name.", "error");
+        nameInput.focus();
+        return;
+    }
+
+    if (!Number.isFinite(data.product_price) || data.product_price <= 0) {
+        showMessage("Product price must be greater than zero.", "error");
+        priceInput.focus();
+        return;
+    }
+
+    if (!Number.isInteger(data.product_quality) || data.product_quality < 0) {
+        showMessage("Stock quantity must be a non-negative whole number.", "error");
+        stockInput.focus();
+        return;
+    }
+
+    if (!Number.isInteger(data.reorder_level) || data.reorder_level < 0) {
+        showMessage("Reorder level must be a non-negative whole number.", "error");
+        reorderInput.focus();
+        return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Saving...";
+    msg.textContent = "";
+    msg.className = "";
+
+    try {
+        const response = await fetch("/api/products", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || "Could not add product.");
+        }
+
+        showMessage(
+            "✓ Product added successfully! Product ID: " +
+            (result.product_id ?? "Created") +
+            ". You can view it on the Products page.",
+            "success"
+        );
+
+        form.reset();
+        updatePreview();
+
+    } catch (error) {
+        showMessage(
+            error.message === "Failed to fetch"
+                ? "Server connection failed. Check that Node.js and MySQL are running."
+                : error.message,
+            "error"
+        );
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = "✓ Save Product";
+    }
+});
+
+updatePreview();
+</script>
+
+</body>
+</html>

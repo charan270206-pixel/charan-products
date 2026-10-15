@@ -1,0 +1,621 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Contact Us | CHARAN CPMS</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+    --bg: #070d1d;
+    --card: #101a32;
+    --purple: #8055ff;
+    --blue: #38bdf8;
+    --white: #f8fafc;
+    --muted: #a9b7d0;
+    --border: rgba(148,163,184,.18);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background:
+        radial-gradient(ellipse at 0% 20%, #32145b55, transparent 40%),
+        radial-gradient(ellipse at 100% 70%, #073d6850, transparent 40%),
+        var(--bg);
+    color: var(--white);
+    min-height: 100vh;
+}
+
+a { text-decoration: none; }
+
+/* NAVIGATION */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 17px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: rgba(7,13,29,.95);
+    border-bottom: 1px solid #253866;
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 900;
+    color: white;
+    white-space: nowrap;
+}
+
+.logo span { color: var(--purple); }
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.links a {
+    padding: 9px 10px;
+    color: #d8e2f8;
+    font-size: 12px;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+.links a:hover,
+.links a.active {
+    background: var(--purple);
+    color: white;
+}
+
+/* HERO */
+.hero {
+    max-width: 1200px;
+    margin: auto;
+    padding: 65px 6% 35px;
+    text-align: center;
+}
+
+.eyebrow {
+    display: inline-block;
+    color: #b6a0ff;
+    background: #8055ff16;
+    border: 1px solid #8055ff55;
+    padding: 9px 16px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 23px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.12;
+    letter-spacing: -1.5px;
+    margin-bottom: 18px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 670px;
+    margin: auto;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+/* MAIN LAYOUT */
+.contact-layout {
+    max-width: 1150px;
+    padding: 25px 6% 70px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 28px;
+    align-items: start;
+}
+
+/* LEFT CONTACT INFO */
+.contact-info {
+    padding: 32px 27px;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at top left, #6738bf44, transparent 55%),
+        linear-gradient(145deg, #111e3b, #0b1429);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px #0002;
+}
+
+.contact-info h2 {
+    font-size: 27px;
+    margin-bottom: 15px;
+}
+
+.contact-info > p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-item:last-of-type {
+    border-bottom: none;
+}
+
+.info-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #6d3cff, #2563eb);
+    font-size: 21px;
+    box-shadow: 0 8px 25px #6738bf30;
+}
+
+.info-item h3 {
+    font-size: 14px;
+    margin: 4px 0 7px;
+}
+
+.info-item p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.info-note {
+    margin-top: 25px;
+    padding: 17px;
+    border-radius: 12px;
+    background: #38bdf810;
+    border: 1px solid #38bdf830;
+    color: #c7eaff;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+/* CONTACT FORM */
+.contact-form {
+    padding: 35px;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #121d37, #0c1429);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 50px #0002;
+}
+
+.form-heading {
+    margin-bottom: 27px;
+}
+
+.form-heading .small-title {
+    color: #a78bfa;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.form-heading h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.form-heading p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    margin-bottom: 19px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 650;
+    color: #e5ebf9;
+    margin-bottom: 9px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid #33415f;
+    border-radius: 10px;
+    outline: none;
+    color: white;
+    background: #091328;
+    font-size: 14px;
+    transition: .25s;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #7f8ca7;
+}
+
+select {
+    cursor: pointer;
+}
+
+select option {
+    background: #101a32;
+    color: white;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #8055ff20;
+}
+
+button {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: linear-gradient(100deg, #713cff, #365fff);
+    font-size: 14px;
+    font-weight: 750;
+    cursor: pointer;
+    box-shadow: 0 8px 25px #6038db30;
+    transition: .3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px #6038db55;
+}
+
+button:disabled {
+    opacity: .65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#msg {
+    display: none;
+    margin-top: 18px;
+    padding: 13px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+#msg.success {
+    display: block;
+    background: #16a34a18;
+    border: 1px solid #22c55e55;
+    color: #86efac;
+}
+
+#msg.error {
+    display: block;
+    background: #ef444418;
+    border: 1px solid #ef444455;
+    color: #fca5a5;
+}
+
+.privacy-note {
+    text-align: center;
+    color: #8594af;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 17px;
+}
+
+/* FOOTER */
+footer {
+    padding: 25px 6%;
+    border-top: 1px solid #253553;
+    text-align: center;
+    color: #95a5c1;
+    font-size: 12px;
+    line-height: 2;
+}
+
+footer strong { color: white; }
+footer span { color: #9875ff; }
+
+@media(max-width: 900px) {
+    nav { justify-content: center; }
+    .links { justify-content: center; }
+
+    .contact-layout {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+    }
+}
+
+@media(max-width: 600px) {
+    nav { padding: 15px 4%; }
+    .logo { font-size: 21px; }
+    .links a { font-size: 11px; padding: 8px; }
+
+    .hero { padding: 45px 6% 20px; }
+    .hero h1 { letter-spacing: -1px; }
+
+    .contact-layout { padding: 20px 5% 45px; }
+
+    .contact-info,
+    .contact-form {
+        padding: 24px 19px;
+        border-radius: 17px;
+    }
+
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+
+    .form-heading h2 { font-size: 25px; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="logo">CHARAN <span>| CPMS</span></a>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="add-product.html">Add Product</a>
+        <a href="search.html">Search</a>
+        <a href="booking.html">Booking</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+        <a href="contact.html" class="active">Contact</a>
+        <a href="about.html">About Us</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <span class="eyebrow">LET'S CONNECT</span>
+
+    <h1>Get in <span class="gradient">Touch With Us</span></h1>
+
+    <p>
+        Have a question, need booking assistance or want to share feedback?
+        Send us a message using the form below. We are happy to hear from you.
+    </p>
+</header>
+
+<main class="contact-layout">
+
+    <section class="contact-info">
+        <h2>Let's Talk, Charan CPMS</h2>
+
+        <p>
+            We're here to help you with product enquiries, booking
+            support and questions about the Products Management System.
+        </p>
+
+        <div class="info-item">
+            <div class="info-icon">✉️</div>
+            <div>
+                <h3>Email Support</h3>
+                <p>Submit your email through the contact form and include your question.</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-icon">📦</div>
+            <div>
+                <h3>Product Enquiries</h3>
+                <p>Ask questions about product details, availability or inventory.</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-icon">🛒</div>
+            <div>
+                <h3>Booking Support</h3>
+                <p>Choose booking support in the form to describe your issue.</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-icon">💬</div>
+            <div>
+                <h3>Feedback & Suggestions</h3>
+                <p>Share your ideas to help improve the application.</p>
+            </div>
+        </div>
+
+        <div class="info-note">
+            ✨ <strong>We're listening!</strong><br>
+            Please provide accurate details so your message can be
+            understood and reviewed properly.
+        </div>
+    </section>
+
+    <section class="contact-form">
+        <div class="form-heading">
+            <div class="small-title">CONTACT FORM</div>
+            <h2>Send Us a Message</h2>
+            <p>Fill in the details below and submit your enquiry.</p>
+        </div>
+
+        <form id="form">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        placeholder="Enter your full name"
+                        maxlength="100"
+                        autocomplete="name"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        maxlength="150"
+                        autocomplete="email"
+                        required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="topic">Choose a Topic *</label>
+
+                <select id="topic" name="topic" required>
+                    <option value="">Select a topic</option>
+                    <option value="Product enquiry">Product enquiry</option>
+                    <option value="Booking support">Booking support</option>
+                    <option value="Technical issue">Technical issue</option>
+                    <option value="Feedback">Feedback</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message *</label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    maxlength="2000"
+                    placeholder="Write your question or message here..."
+                    required></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn">
+                Send Message &nbsp; →
+            </button>
+
+            <p id="msg" role="status" aria-live="polite"></p>
+
+            <div class="privacy-note">
+                Your message will be submitted to the CPMS backend.
+                Please do not include passwords or sensitive information.
+            </div>
+        </form>
+    </section>
+
+</main>
+
+<footer>
+    <strong>CHARAN <span>| CPMS</span></strong><br>
+    Products Management System<br>
+    © <span id="year"></span> CHARAN CPMS. All rights reserved.
+</footer>
+
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+const form = document.getElementById("form");
+const msg = document.getElementById("msg");
+const submitBtn = document.getElementById("submitBtn");
+
+form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    msg.className = "";
+    msg.style.display = "none";
+
+    const data = Object.fromEntries(new FormData(form).entries());
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending message...";
+
+    try {
+        const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.error || "Could not send your message."
+            );
+        }
+
+        msg.textContent =
+            result.message || "Message sent successfully! Thank you for contacting us.";
+
+        msg.className = "success";
+        msg.style.display = "block";
+
+        form.reset();
+
+    } catch (error) {
+        msg.textContent =
+            error.message === "Failed to fetch"
+                ? "Server connection failed. Please check that the server is running."
+                : error.message || "Something went wrong. Please try again.";
+
+        msg.className = "error";
+        msg.style.display = "block";
+
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send Message →";
+    }
+});
+</script>
+
+</body>
+</html>

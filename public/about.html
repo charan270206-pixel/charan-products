@@ -1,0 +1,719 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | CHARAN CPMS</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+    --bg: #080d1b;
+    --card: #111a2e;
+    --purple: #8b5cf6;
+    --blue: #38bdf8;
+    --white: #f8fafc;
+    --muted: #a8b3ca;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; }
+
+nav {
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: rgba(8,13,27,.96);
+    border-bottom: 1px solid #293c75;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    color: white;
+    font-size: 23px;
+    font-weight: 900;
+}
+
+.logo span { color: var(--purple); }
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.links a {
+    color: #dbe5ff;
+    font-size: 12px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+.links a:hover,
+.links a.active {
+    background: var(--purple);
+    color: white;
+}
+
+.hero {
+    padding: 65px 6%;
+    background:
+        radial-gradient(ellipse at 85% 45%, #342080 0%, transparent 43%),
+        linear-gradient(115deg, #121342, #031d43 65%, #211052);
+    border-bottom: 1px solid #34378a;
+}
+
+.hero-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 35px;
+}
+
+.eyebrow, .section-label {
+    color: #a78bfa;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 5vw, 58px);
+    line-height: 1.1;
+    margin-bottom: 18px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero h3 {
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 18px;
+}
+
+.hero p, .section p {
+    color: var(--muted);
+    line-height: 1.85;
+    font-size: 14px;
+}
+
+.buttons {
+    display: flex;
+    gap: 13px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 13px 21px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.btn-primary {
+    color: white;
+    background: linear-gradient(100deg, #713cff, #435cff);
+}
+
+.btn-outline {
+    color: white;
+    border: 1px solid #b6a4ff;
+}
+
+.btn:hover { transform: translateY(-3px); }
+
+/* Dashboard illustration */
+.dashboard-art {
+    min-height: 300px;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.laptop {
+    width: min(100%, 420px);
+    padding: 16px;
+    border: 2px solid #426fff;
+    border-radius: 17px;
+    background: #111c47;
+    box-shadow: 0 20px 60px #267aff30;
+}
+
+.screen {
+    padding: 17px;
+    min-height: 205px;
+    color: #172447;
+    background: #edf3ff;
+    border-radius: 9px;
+}
+
+.screen-top {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #d4def1;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.screen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.screen-box {
+    background: white;
+    border: 1px solid #dce5f5;
+    border-radius: 8px;
+    padding: 13px;
+    font-size: 12px;
+}
+
+.screen-box strong {
+    display: block;
+    color: #653bdf;
+    font-size: 21px;
+    margin-top: 5px;
+}
+
+.laptop-base {
+    width: 112%;
+    height: 10px;
+    margin-left: -6%;
+    background: linear-gradient(90deg, #4964ba, #d5dfff, #3e57a4);
+    border-radius: 2px 2px 12px 12px;
+}
+
+.floating-icon {
+    position: absolute;
+    font-size: 26px;
+    padding: 12px;
+    background: #17275d;
+    border: 1px solid #416dff;
+    border-radius: 13px;
+}
+
+.icon-one { top: 8px; left: 2%; }
+.icon-two { top: 15px; right: 2%; }
+.icon-three { bottom: 20px; left: 3%; }
+
+.section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 50px 6%;
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: .9fr 1.1fr;
+    align-items: center;
+    gap: 35px;
+}
+
+.section h2 {
+    font-size: clamp(27px, 3vw, 35px);
+    margin-bottom: 16px;
+}
+
+.mv-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.mv-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.round-icon {
+    min-width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #703cff, #365cff);
+    font-size: 20px;
+}
+
+.mv-item h4 {
+    margin: 5px 0 8px;
+    font-size: 14px;
+}
+
+.mv-item p { font-size: 12px; }
+
+/* MANAGER PHOTO CARD */
+.manager-section {
+    padding: 30px 0;
+}
+
+.manager-card {
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 16px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #101d40, #11102e);
+    border: 1px solid #4939a7;
+    color: white;
+    box-shadow: 0 15px 40px #0005;
+    transition: .3s;
+}
+
+.manager-card:hover {
+    transform: translateY(-4px);
+    border-color: #8b5cf6;
+}
+
+.manager-card img {
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 15px;
+    border: 2px solid #7050ff;
+    background: #172442;
+}
+
+.manager-info { padding: 12px; }
+
+.badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #6338f5, #475dff);
+    padding: 8px 12px;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.manager-info h2 {
+    margin: 18px 0 8px;
+    font-size: 28px;
+}
+
+.manager-info .role {
+    color: #b8a7ff;
+    margin-bottom: 22px;
+}
+
+.manager-info blockquote {
+    color: #cbd5e1;
+    line-height: 1.8;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.socials a {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: white;
+    border: 1px solid #4159aa;
+    background: #142858;
+}
+
+.socials a:hover { background: #713cff; }
+
+/* Statistics */
+.stats {
+    max-width: 1080px;
+    margin: 0 auto 20px;
+    padding: 27px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: linear-gradient(110deg, #5428b8, #172c83, #21155f);
+    border: 1px solid #5148d8;
+    border-radius: 15px;
+}
+
+.stat {
+    padding: 10px 18px;
+    border-right: 1px solid #7777d8;
+}
+
+.stat:last-child { border-right: none; }
+
+.stat-icon { font-size: 23px; margin-bottom: 9px; }
+
+.stat h3 { font-size: 24px; margin-bottom: 8px; }
+
+.stat p {
+    font-size: 12px;
+    color: #e0e6ff;
+}
+
+/* Features */
+.features-layout {
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 35px;
+    align-items: center;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+
+.feature {
+    display: flex;
+    gap: 13px;
+    padding: 18px 14px;
+    border: 1px solid #203c69;
+    border-radius: 12px;
+    background: linear-gradient(130deg, #0e1b35, #09142a);
+    transition: .3s;
+}
+
+.feature:hover {
+    transform: translateY(-4px);
+    border-color: #7254ff;
+}
+
+.feature h4 { font-size: 13px; margin: 5px 0 8px; }
+.feature p { font-size: 12px; }
+
+footer {
+    border-top: 1px solid #203459;
+    padding: 24px 6%;
+    text-align: center;
+    color: #9eafd0;
+    font-size: 12px;
+    line-height: 2;
+}
+
+footer strong { color: white; }
+footer span { color: #9875ff; }
+
+.back-top {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    padding: 11px 14px;
+    border-radius: 10px;
+    background: #131f48;
+    color: white;
+    border: 1px solid #354a93;
+    font-size: 12px;
+}
+
+@media(max-width: 950px) {
+    nav { justify-content: center; }
+    .links { justify-content: center; }
+    .hero-inner,
+    .mission-grid,
+    .features-layout {
+        grid-template-columns: 1fr;
+    }
+    .dashboard-art { max-width: 600px; width: 100%; margin: auto; }
+    .manager-card { max-width: 750px; }
+    .stats { margin: 0 6% 20px; }
+}
+
+@media(max-width: 600px) {
+    nav { padding: 15px 4%; }
+    .links a { padding: 8px; font-size: 11px; }
+    .hero { padding: 45px 6%; }
+    .dashboard-art { min-height: 250px; }
+    .section { padding: 35px 6%; }
+    .mv-items { grid-template-columns: 1fr; }
+    .manager-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .manager-card img {
+        width: 100%;
+        height: 300px;
+    }
+    .manager-info { padding: 12px; }
+    .stats {
+        grid-template-columns: 1fr 1fr;
+        padding: 15px;
+    }
+    .stat { padding: 15px 10px; border-right: none; }
+    .features-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="logo">CHARAN <span>| CPMS</span></a>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="add-product.html">Add Product</a>
+        <a href="search.html">Search</a>
+        <a href="booking.html">Booking</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html" class="active">About Us</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+
+        <div>
+            <div class="eyebrow">GET TO KNOW US ━━━━━</div>
+
+            <h1>About CHARAN<br><span class="gradient">| CPMS</span></h1>
+
+            <h3>We are building a smarter and simpler way to manage products.</h3>
+
+            <p>
+                CHARAN Products Management System is a web application
+                designed to help businesses track, manage and organize
+                product information efficiently. Our goal is to make
+                product management easy, fast and reliable.
+            </p>
+
+            <div class="buttons">
+                <a href="products.html" class="btn btn-primary">Explore Products →</a>
+                <a href="contact.html" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+
+        <div class="dashboard-art">
+            <div class="floating-icon icon-one">📦</div>
+            <div class="floating-icon icon-two">🔎</div>
+            <div class="floating-icon icon-three">🛡️</div>
+
+            <div class="laptop">
+                <div class="screen">
+                    <div class="screen-top">
+                        <span>CHARAN Dashboard</span>
+                        <span>● ● ●</span>
+                    </div>
+
+                    <div class="screen-grid">
+                        <div class="screen-box">Total Products<strong>📦</strong></div>
+                        <div class="screen-box">Inventory<strong>✓</strong></div>
+                        <div class="screen-box">Product Records<strong>▤</strong></div>
+                        <div class="screen-box">Analytics<strong>↗</strong></div>
+                    </div>
+                </div>
+                <div class="laptop-base"></div>
+            </div>
+        </div>
+
+    </div>
+</header>
+
+<section class="section">
+    <div class="mission-grid">
+
+        <div>
+            <div class="section-label">OUR MISSION & VISION ━━━━━</div>
+            <h2>Turning Ideas into<br>Useful Solutions</h2>
+
+            <p>
+                We aim to create simple and effective tools that help
+                users manage their products with ease. Our focus is on
+                providing a clean interface, reliable performance and
+                a better user experience.
+            </p>
+
+            <div class="mv-items">
+                <div class="mv-item">
+                    <div class="round-icon">◎</div>
+                    <div>
+                        <h4>Our Mission</h4>
+                        <p>To simplify product management and make it accessible to everyone.</p>
+                    </div>
+                </div>
+
+                <div class="mv-item">
+                    <div class="round-icon">◉</div>
+                    <div>
+                        <h4>Our Vision</h4>
+                        <p>To become a trusted platform for product management solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manager photo section -->
+        <div class="manager-section">
+            <div class="manager-card">
+
+                <img src="charan.jpeg.png" alt="Project Manager"
+                     onerror="this.onerror=null;this.src='https://placehold.co/600x700/101d40/ffffff?text=Manager+Photo';">
+
+                <div class="manager-info">
+                    <span class="badge">PROJECT MANAGER</span>
+
+                    <h2>Sai Charan</h2>
+                    <p class="role">Founder & Project Manager</p>
+
+                    <blockquote>
+                        "Technology is not just about building software,
+                        it's about creating solutions that make life easier."
+                    </blockquote>
+
+                    <div class="socials">
+                        <a href="contact.html" aria-label="Contact">✉</a>
+                        <a href="contact.html" aria-label="Call">☎</a>
+                        <a href="contact.html" aria-label="More information">➜</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat">
+        <div class="stat-icon">📦</div>
+        <h3>9</h3>
+        <p>Total Pages</p>
+        <p>Dedicated management pages</p>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">▤</div>
+        <h3>1</h3>
+        <p>Database</p>
+        <p>MySQL data storage</p>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">♙</div>
+        <h3>100%</h3>
+        <p>User Friendly</p>
+        <p>Simple interface</p>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">🛡️</div>
+        <h3>Reliable</h3>
+        <p>Efficient System</p>
+        <p>Modern web technologies</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="features-layout">
+
+        <div>
+            <div class="section-label">WHY CHOOSE US ━━━━━</div>
+            <h2>What Makes Us Different</h2>
+
+            <p>
+                We focus on simplicity, efficiency and reliability.
+                Our system helps users manage products, track stock
+                and handle operations without unnecessary complexity.
+            </p>
+
+            <div class="buttons">
+                <a href="products.html" class="btn btn-primary">Learn More →</a>
+            </div>
+        </div>
+
+        <div class="features-grid">
+
+            <div class="feature">
+                <div class="round-icon">⚡</div>
+                <div>
+                    <h4>Easy to Use</h4>
+                    <p>Clean and simple interface for smooth navigation.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="round-icon">▤</div>
+                <div>
+                    <h4>Database Driven</h4>
+                    <p>MySQL integration for persistent product records.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="round-icon">▣</div>
+                <div>
+                    <h4>Responsive Design</h4>
+                    <p>Designed for desktop, tablet and mobile screens.</p>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="round-icon">🛡️</div>
+                <div>
+                    <h4>Reliable System</h4>
+                    <p>Backend validation and organized database operations.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer>
+    <strong>CHARAN <span>| CPMS</span></strong><br>
+    Products Management System |
+    © <span id="year"></span> CHARAN CPMS. All rights reserved.
+</footer>
+
+<a href="#" class="back-top">↑ Back to Top</a>
+
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+</script>
+
+</body>
+</html>

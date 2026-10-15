@@ -1,0 +1,758 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delete Product | CHARAN CPMS</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+    --bg: #070d1d;
+    --card: #111a32;
+    --purple: #8055ff;
+    --blue: #38bdf8;
+    --white: #f8fafc;
+    --muted: #a9b7d0;
+    --border: #263653;
+    --red: #fb7185;
+}
+
+body {
+    min-height: 100vh;
+    color: var(--white);
+    background:
+        radial-gradient(ellipse at 0% 20%, #4c143c40, transparent 40%),
+        radial-gradient(ellipse at 100% 70%, #102f7045, transparent 40%),
+        var(--bg);
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 17px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: rgba(7,13,29,.96);
+    border-bottom: 1px solid #263866;
+    backdrop-filter: blur(14px);
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 900;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.logo span { color: var(--purple); }
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.links a {
+    color: #d8e2f8;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+.links a:hover,
+.links a.active {
+    color: white;
+    background: var(--purple);
+}
+
+.hero {
+    text-align: center;
+    padding: 50px 20px 25px;
+}
+
+.eyebrow {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 30px;
+    border: 1px solid #fb718555;
+    background: #fb718510;
+    color: #fda4af;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 5vw, 48px);
+    margin-bottom: 15px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #a78bfa, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero p {
+    max-width: 600px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.main-layout {
+    max-width: 1050px;
+    margin: auto;
+    padding: 20px 5% 65px;
+    display: grid;
+    grid-template-columns: .8fr 1.2fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.info-card,
+.delete-card {
+    background: linear-gradient(145deg, #121e39, #0b1429);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 18px 45px #0002;
+}
+
+.info-card { padding: 28px 24px; }
+
+.warning-icon {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    font-size: 27px;
+    background: #fb71851a;
+    border: 1px solid #fb718550;
+    margin-bottom: 22px;
+}
+
+.info-card h2 {
+    font-size: 24px;
+    margin-bottom: 13px;
+}
+
+.info-card > p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.warning-box {
+    padding: 16px;
+    margin-top: 24px;
+    border-radius: 12px;
+    border: 1px solid #fb718544;
+    background: #fb718510;
+}
+
+.warning-box h3 {
+    font-size: 14px;
+    color: #fda4af;
+    margin-bottom: 9px;
+}
+
+.warning-box p {
+    color: #e3c4ce;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.steps {
+    display: grid;
+    gap: 16px;
+    margin-top: 25px;
+}
+
+.step {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #8055ff25;
+    color: #c4b5fd;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.step p {
+    color: #c5d1e8;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.delete-card {
+    padding: 30px;
+}
+
+.card-heading {
+    margin-bottom: 27px;
+}
+
+.card-heading .small-title {
+    color: #a78bfa;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.card-heading h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.card-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+label {
+    display: block;
+    color: #e2e8f8;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.form-group { margin-bottom: 22px; }
+
+select,
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #344563;
+    border-radius: 10px;
+    color: white;
+    background: #091328;
+    font-size: 14px;
+    outline: none;
+    transition: .25s;
+}
+
+select { cursor: pointer; }
+
+select option {
+    color: white;
+    background: #101a32;
+}
+
+input::placeholder { color: #7f8ca7; }
+
+select:focus,
+input:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #8055ff20;
+}
+
+.product-preview {
+    display: none;
+    padding: 18px;
+    margin-bottom: 22px;
+    border-radius: 12px;
+    background: #38bdf810;
+    border: 1px solid #38bdf830;
+}
+
+.product-preview.show { display: block; }
+
+.preview-label {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.product-preview h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+    overflow-wrap: anywhere;
+}
+
+.preview-details {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+.preview-details span {
+    font-size: 12px;
+    color: #d4def3;
+    background: #152847;
+    padding: 7px 10px;
+    border-radius: 7px;
+}
+
+.delete-btn {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #fb718550;
+    border-radius: 10px;
+    color: white;
+    background: linear-gradient(100deg, #dc2626, #be123c);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.delete-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px #dc262640;
+}
+
+.delete-btn:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.secondary-btn {
+    width: 100%;
+    padding: 13px;
+    margin-top: 12px;
+    border: 1px solid #344563;
+    border-radius: 10px;
+    background: transparent;
+    color: #d7e0f3;
+    cursor: pointer;
+}
+
+#msg {
+    display: none;
+    margin-top: 18px;
+    padding: 13px;
+    border-radius: 9px;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+#msg.success {
+    display: block;
+    background: #16a34a18;
+    border: 1px solid #22c55e55;
+    color: #86efac;
+}
+
+#msg.error {
+    display: block;
+    background: #ef444418;
+    border: 1px solid #ef444455;
+    color: #fca5a5;
+}
+
+.helper {
+    color: #8494b0;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-top: 9px;
+}
+
+footer {
+    border-top: 1px solid #263653;
+    padding: 24px;
+    text-align: center;
+    color: #95a5c1;
+    font-size: 12px;
+    line-height: 2;
+}
+
+footer strong { color: white; }
+footer span { color: #9875ff; }
+
+@media(max-width: 850px) {
+    nav { justify-content: center; }
+    .links { justify-content: center; }
+
+    .main-layout {
+        grid-template-columns: 1fr;
+        max-width: 650px;
+    }
+}
+
+@media(max-width: 550px) {
+    nav { padding: 14px 4%; }
+    .links a { padding: 8px; font-size: 11px; }
+    .hero { padding: 40px 6% 20px; }
+    .main-layout { padding: 18px 5% 45px; }
+    .info-card, .delete-card { padding: 23px 19px; }
+    .card-heading h2 { font-size: 23px; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="logo">CHARAN <span>| CPMS</span></a>
+
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="add-product.html">Add Product</a>
+        <a href="search.html">Search</a>
+        <a href="booking.html">Booking</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html" class="active">Delete</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About Us</a>
+    </div>
+</nav>
+
+<header class="hero">
+    <span class="eyebrow">INVENTORY MANAGEMENT</span>
+
+    <h1>Delete <span class="gradient">Product</span></h1>
+
+    <p>
+        Manage your inventory with confidence. Select a product
+        from the database and review its details before deletion.
+    </p>
+</header>
+
+<main class="main-layout">
+
+    <section class="info-card">
+        <div class="warning-icon">🗑️</div>
+
+        <h2>Remove a Product</h2>
+
+        <p>
+            Use this page to remove a product record that is no longer
+            needed. Always verify the selected product before continuing.
+        </p>
+
+        <div class="warning-box">
+            <h3>⚠ Important Warning</h3>
+            <p>
+                Deleting a product may be permanent. Make sure you
+                select the correct product before confirming.
+            </p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <p>Select a product from the dropdown list.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <p>Review the product ID, name, price and stock.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <p>Confirm the deletion when prompted.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="delete-card">
+        <div class="card-heading">
+            <div class="small-title">PRODUCT CONTROL PANEL</div>
+            <h2>Delete Product Record</h2>
+            <p>Choose the product you want to remove from your inventory.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="productSelect">Select Product *</label>
+
+            <select id="productSelect">
+                <option value="">Loading products...</option>
+            </select>
+
+            <p class="helper">
+                Product names and IDs are loaded from your MySQL database.
+            </p>
+        </div>
+
+        <div class="product-preview" id="preview">
+            <div class="preview-label">SELECTED PRODUCT DETAILS</div>
+            <h3 id="previewName">Product name</h3>
+
+            <div class="preview-details">
+                <span id="previewId">ID: -</span>
+                <span id="previewPrice">Price: -</span>
+                <span id="previewStock">Stock: -</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="manualId">Or Enter Product ID</label>
+            <input
+                type="number"
+                id="manualId"
+                min="1"
+                step="1"
+                placeholder="Enter product ID manually">
+
+            <p class="helper">
+                Use this option if the product is not listed in the dropdown.
+            </p>
+        </div>
+
+        <button type="button" class="delete-btn" id="deleteBtn">
+            🗑 Delete Selected Product
+        </button>
+
+        <button type="button" class="secondary-btn" id="refreshBtn">
+            ↻ Refresh Product List
+        </button>
+
+        <p id="msg" role="status" aria-live="polite"></p>
+    </section>
+
+</main>
+
+<footer>
+    <strong>CHARAN <span>| CPMS</span></strong><br>
+    Products Management System<br>
+    © <span id="year"></span> CHARAN CPMS. All rights reserved.
+</footer>
+
+<script>
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+const productSelect = document.getElementById("productSelect");
+const manualId = document.getElementById("manualId");
+const preview = document.getElementById("preview");
+const msg = document.getElementById("msg");
+const deleteBtn = document.getElementById("deleteBtn");
+const refreshBtn = document.getElementById("refreshBtn");
+
+let products = [];
+
+function showMessage(text, type) {
+    msg.textContent = text;
+    msg.className = type;
+    msg.style.display = "block";
+}
+
+function clearMessage() {
+    msg.textContent = "";
+    msg.className = "";
+    msg.style.display = "none";
+}
+
+function getProductId(product) {
+    return product.product_id ?? product.id;
+}
+
+function renderPreview(product) {
+    if (!product) {
+        preview.classList.remove("show");
+        return;
+    }
+
+    document.getElementById("previewName").textContent =
+        product.product_name ?? product.name ?? "Unnamed product";
+
+    document.getElementById("previewId").textContent =
+        "ID: " + getProductId(product);
+
+    document.getElementById("previewPrice").textContent =
+        "Price: ₹" + (product.product_price ?? product.price ?? "N/A");
+
+    document.getElementById("previewStock").textContent =
+        "Stock: " + (product.product_quality ?? product.quality ?? "N/A");
+
+    preview.classList.add("show");
+}
+
+function findSelectedProduct() {
+    const selectedId = productSelect.value || manualId.value;
+
+    if (!selectedId) return null;
+
+    return products.find(
+        p => String(getProductId(p)) === String(selectedId)
+    ) || null;
+}
+
+async function loadProducts() {
+    clearMessage();
+    refreshBtn.disabled = true;
+    productSelect.innerHTML = '<option value="">Loading products...</option>';
+
+    try {
+        const response = await fetch("/api/products");
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Could not load products.");
+        }
+
+        products = Array.isArray(data)
+            ? data
+            : (data.products || []);
+
+        productSelect.innerHTML =
+            '<option value="">-- Select a product --</option>';
+
+        products.forEach(product => {
+            const id = getProductId(product);
+            const name = product.product_name ?? product.name ?? "Unnamed product";
+
+            if (id == null) return;
+
+            const option = document.createElement("option");
+            option.value = id;
+            option.textContent = "ID " + id + " - " + name;
+            productSelect.appendChild(option);
+        });
+
+        if (products.length === 0) {
+            productSelect.innerHTML =
+                '<option value="">No products available</option>';
+
+            renderPreview(null);
+            showMessage("No products found in the database.", "error");
+        } else {
+            productSelect.value = "";
+            renderPreview(null);
+        }
+
+    } catch (error) {
+        productSelect.innerHTML =
+            '<option value="">Unable to load products</option>';
+
+        renderPreview(null);
+
+        showMessage(
+            error.message === "Failed to fetch"
+                ? "Server connection failed. Make sure Node.js server is running."
+                : error.message,
+            "error"
+        );
+    } finally {
+        refreshBtn.disabled = false;
+    }
+}
+
+productSelect.addEventListener("change", function() {
+    clearMessage();
+
+    if (productSelect.value) {
+        manualId.value = "";
+    }
+
+    renderPreview(findSelectedProduct());
+});
+
+manualId.addEventListener("input", function() {
+    clearMessage();
+
+    if (manualId.value) {
+        productSelect.value = "";
+    }
+
+    renderPreview(findSelectedProduct());
+});
+
+deleteBtn.addEventListener("click", async function() {
+    clearMessage();
+
+    const id = productSelect.value || manualId.value;
+
+    if (!id || !Number.isInteger(Number(id)) || Number(id) < 1) {
+        showMessage("Please select a product or enter a valid product ID.", "error");
+        return;
+    }
+
+    const selectedProduct = products.find(
+        p => String(getProductId(p)) === String(id)
+    );
+
+    const productName = selectedProduct
+        ? (selectedProduct.product_name ?? selectedProduct.name ?? "this product")
+        : "product ID " + id;
+
+    const confirmed = confirm(
+        "Are you sure you want to permanently delete " +
+        productName + " (ID: " + id + ")?"
+    );
+
+    if (!confirmed) return;
+
+    deleteBtn.disabled = true;
+    deleteBtn.textContent = "Deleting product...";
+
+    try {
+        const response = await fetch(
+            "/api/products/" + encodeURIComponent(id),
+            { method: "DELETE" }
+        );
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || "Could not delete product.");
+        }
+
+        showMessage(
+            result.message || "Product deleted successfully.",
+            "success"
+        );
+
+        manualId.value = "";
+        productSelect.value = "";
+        renderPreview(null);
+
+        await loadProducts();
+
+    } catch (error) {
+        showMessage(
+            error.message === "Failed to fetch"
+                ? "Server connection failed. Please check your server."
+                : error.message,
+            "error"
+        );
+    } finally {
+        deleteBtn.disabled = false;
+        deleteBtn.textContent = "🗑 Delete Selected Product";
+    }
+});
+
+refreshBtn.addEventListener("click", loadProducts);
+
+loadProducts();
+</script>
+
+</body>
+</html>

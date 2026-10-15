@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHARAN | CPMS - Search Products</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Arial,sans-serif;background:#f1f5f9;color:#172033}
+nav{background:#10172e;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px}
+.brand{font-size:23px;font-weight:800}
+.brand span{color:#38bdf8}
+.links{display:flex;gap:14px;flex-wrap:wrap}
+.links a{color:#dbeafe;text-decoration:none;font-size:13px;font-weight:600}
+.links a:hover,.links a.active{color:#38bdf8}
+
+.hero{background:linear-gradient(120deg,#10172e,#24428a,#6d28d9);padding:48px 5%;color:white}
+.hero-inner{max-width:1200px;margin:auto}
+.tag{display:inline-block;background:#ffffff20;padding:8px 13px;border-radius:25px;font-size:12px;margin-bottom:15px}
+.hero h1{font-size:clamp(30px,4vw,43px);margin-bottom:12px}
+.hero p{line-height:1.8;color:#e0e7ff;max-width:700px}
+
+main{max-width:1200px;margin:30px auto;padding:0 20px 45px}
+.heading{margin-bottom:20px}
+.heading h2{font-size:26px;margin-bottom:7px}
+.heading p{color:#64748b;font-size:14px}
+
+.search-panel{background:white;padding:25px;border:1px solid #e2e8f0;border-radius:17px;box-shadow:0 8px 25px #0f172a08}
+.form-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:17px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:9px}
+.field input,.field select{width:100%;height:47px;padding:0 13px;border:1px solid #cbd5e1;border-radius:9px;background:white;font-size:14px;outline:none}
+.field input:focus,.field select:focus{border-color:#2563eb;box-shadow:0 0 0 3px #2563eb18}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+.btn{border:0;padding:12px 18px;border-radius:9px;font-weight:700;cursor:pointer}
+.primary{background:linear-gradient(110deg,#2563eb,#7c3aed);color:white}
+.secondary{background:#eef2ff;color:#3730a3}
+.btn:hover{filter:brightness(.95)}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin:25px 0}
+.stat{background:white;border:1px solid #e2e8f0;border-radius:14px;padding:20px;display:flex;align-items:center;gap:14px}
+.stat-icon{font-size:26px;background:#dbeafe;padding:12px;border-radius:12px}
+.stat-label{color:#64748b;font-size:12px;margin-bottom:5px}
+.stat-value{font-size:23px;font-weight:800;overflow-wrap:anywhere}
+
+.results-heading{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin:30px 0 18px}
+.results-heading p{color:#64748b;font-size:13px;margin-top:5px}
+.product-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+
+.product-card{background:white;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;box-shadow:0 5px 20px #0f172a08;transition:.25s}
+.product-card:hover{transform:translateY(-5px);box-shadow:0 12px 28px #0f172a14}
+
+.product-image{height:210px;background:linear-gradient(135deg,#eef2ff,#f8fafc);display:flex;align-items:center;justify-content:center;padding:15px;overflow:hidden}
+.product-image img{width:100%;height:100%;object-fit:contain;display:block}
+.product-body{padding:20px}
+.product-id{display:inline-block;background:#dbeafe;color:#1d4ed8;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:800;margin-bottom:12px}
+.product-body h3{font-size:19px;margin-bottom:9px;overflow-wrap:anywhere}
+.price{font-size:25px;font-weight:800;color:#4f46e5;margin:12px 0 18px}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.detail{background:#f8fafc;border:1px solid #f1f5f9;border-radius:9px;padding:12px}
+.detail span{display:block;font-size:11px;color:#64748b;margin-bottom:5px}
+.detail strong{font-size:15px;overflow-wrap:anywhere}
+.status-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:17px}
+.status{padding:6px 10px;border-radius:25px;font-size:11px;font-weight:800}
+.in{background:#dcfce7;color:#15803d}
+.low{background:#fef3c7;color:#a16207}
+.out{background:#fee2e2;color:#b91c1c}
+.card-links{display:flex;gap:17px;margin-top:19px;padding-top:16px;border-top:1px solid #e2e8f0}
+.card-links a{text-decoration:none;color:#2563eb;font-size:12px;font-weight:800}
+.card-links .delete-link{color:#dc2626}
+
+.message{background:white;padding:25px;border:1px solid #e2e8f0;border-radius:12px;text-align:center;color:#64748b;line-height:1.8;grid-column:1/-1}
+footer{background:#10172e;color:#cbd5e1;text-align:center;padding:23px;font-size:13px}
+
+@media(max-width:900px){
+.form-grid{grid-template-columns:1fr 1fr}
+.form-grid .field:first-child{grid-column:1/-1}
+.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+nav{padding:16px 5%}
+.links{gap:11px}
+.hero{padding:35px 5%}
+main{padding:0 14px 30px}
+.search-panel{padding:17px}
+.form-grid,.product-grid,.stats{grid-template-columns:1fr}
+.form-grid .field:first-child{grid-column:auto}
+.product-image{height:230px}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="brand">CHARAN <span>| CPMS</span></div>
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="add-product.html">Add Product</a>
+        <a href="search.html" class="active">Search</a>
+        <a href="booking.html">Booking</a>
+        <a href="update.html">Update</a>
+        <a href="delete.html">Delete</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About Us</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-inner">
+        <span class="tag">CHARAN PRODUCT MANAGEMENT SYSTEM</span>
+        <h1>Find Your Products 🔍</h1>
+        <p>Search products by name or ID, filter by stock availability, sort results, and view product images, pricing, and inventory information in one place.</p>
+    </div>
+</section>
+
+<main>
+    <div class="heading">
+        <h2>Search & Filter Products</h2>
+        <p>Choose your search criteria below to find products quickly.</p>
+    </div>
+
+    <section class="search-panel">
+        <div class="form-grid">
+            <div class="field">
+                <label for="term">Product Name or ID</label>
+                <input id="term" type="search" placeholder="Example: Laptop or 101">
+            </div>
+
+            <div class="field">
+                <label for="stockFilter">Stock Availability</label>
+                <select id="stockFilter">
+                    <option value="all">All Products</option>
+                    <option value="in">In Stock</option>
+                    <option value="low">Low Stock</option>
+                    <option value="out">Out of Stock</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="sortBy">Sort By</label>
+                <select id="sortBy">
+                    <option value="newest">Newest First</option>
+                    <option value="name-asc">Name: A to Z</option>
+                    <option value="name-desc">Name: Z to A</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="stock-high">Stock: High to Low</option>
+                    <option value="stock-low">Stock: Low to High</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn primary" id="searchBtn" type="button">🔍 Search Products</button>
+            <button class="btn secondary" id="resetBtn" type="button">↻ Reset Filters</button>
+            <button class="btn secondary" id="refreshBtn" type="button">⟳ Refresh</button>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-icon">📦</div>
+            <div><div class="stat-label">Matching Products</div><div class="stat-value" id="totalProducts">0</div></div>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">💰</div>
+            <div><div class="stat-label">Matching Stock Value</div><div class="stat-value" id="totalValue">₹0</div></div>
+        </div>
+        <div class="stat">
+            <div class="stat-icon">📊</div>
+            <div><div class="stat-label">Total Units</div><div class="stat-value" id="totalStock">0</div></div>
+        </div>
+    </section>
+
+    <section>
+        <div class="results-heading">
+            <div>
+                <h2>Product Results</h2>
+                <p id="resultCount">Loading products...</p>
+            </div>
+        </div>
+        <div class="product-grid" id="result">
+            <div class="message">Loading products from database...</div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 CHARAN | CPMS — Product Management System</p>
+    <p style="margin-top:6px">Smart Inventory Management • Simple • Efficient</p>
+</footer>
+
+<script>
+const termInput = document.getElementById("term");
+const stockFilter = document.getElementById("stockFilter");
+const sortBy = document.getElementById("sortBy");
+const resultBox = document.getElementById("result");
+const resultCount = document.getElementById("resultCount");
+
+let allProducts = [];
+
+/* Product images are selected using the product ID.
+   Replace these URLs with your own image URLs if preferred. */
+const productImages = {
+    1: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=85",
+    2: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=85",
+    3: "https://media.istockphoto.com/id/928066156/photo/open-refrigerator-in-kitchen.webp?a=1&b=1&s=612x612&w=0&k=20&c=cPLOfJAcDikYg0kL1pwVRzJzwo789h0SBxb_EFSwXuE=",
+    4: "https://media.istockphoto.com/id/1256618106/photo/leather-cricket-ball-resting-on-a-cricket-bat-placed-on-green-grass-cricket-ground-pitch.webp?a=1&b=1&s=612x612&w=0&k=20&c=sFSvkpug_VkcXYVsME8hQuulwrGz7tvAcyjYUrnCJxQ=",
+    5: "https://images.unsplash.com/photo-1543248939-4296e1fea89b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D",
+    6: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=85",
+    7: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=85",
+    8: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=85"
+};
+
+const fallbackImage =
+    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=85";
+
+function esc(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(c) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+}
+
+function money(value) {
+    return "₹" + (Number(value) || 0).toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function imageFor(product) {
+    const id = Number(product.product_id);
+    return productImages[id] || fallbackImage;
+}
+
+function getStatus(product) {
+    const stock = Number(product.product_quality) || 0;
+    const reorder = Number(product.reorder_level) || 0;
+
+    if (stock <= 0) return {key:"out", label:"Out of Stock"};
+    if (stock <= reorder) return {key:"low", label:"Low Stock"};
+    return {key:"in", label:"In Stock"};
+}
+
+function updateStats(products) {
+    const value = products.reduce((sum, p) =>
+        sum + (Number(p.product_price) || 0) *
+              (Number(p.product_quality) || 0), 0);
+
+    const stock = products.reduce((sum, p) =>
+        sum + (Number(p.product_quality) || 0), 0);
+
+    document.getElementById("totalProducts").textContent = products.length;
+    document.getElementById("totalValue").textContent = money(value);
+    document.getElementById("totalStock").textContent = stock.toLocaleString("en-IN");
+}
+
+function renderProducts(products) {
+    updateStats(products);
+    resultCount.textContent = products.length +
+        (products.length === 1 ? " product found" : " products found");
+
+    if (!products.length) {
+        resultBox.innerHTML = `
+            <div class="message">
+                <div style="font-size:38px">🔎</div>
+                <strong>No matching products found.</strong>
+                <p>Try a different name, product ID, or stock filter.</p>
+            </div>`;
+        return;
+    }
+
+    resultBox.innerHTML = products.map(function(p) {
+        const status = getStatus(p);
+        const id = encodeURIComponent(p.product_id);
+        const imageSrc = esc(imageFor(p));
+
+        return `
+        <article class="product-card">
+            <div class="product-image">
+                <img
+                    src="${imageSrc}"
+                    alt="${esc(p.product_name)}"
+                    loading="lazy"
+                    onerror="this.onerror=null;this.src='${fallbackImage}'">
+            </div>
+
+            <div class="product-body">
+                <span class="product-id">PRODUCT ID: ${esc(p.product_id)}</span>
+                <h3>${esc(p.product_name)}</h3>
+                <div class="price">${money(p.product_price)}</div>
+
+                <div class="details">
+                    <div class="detail">
+                        <span>Available Stock</span>
+                        <strong>${esc(p.product_quality)}</strong>
+                    </div>
+                    <div class="detail">
+                        <span>Reorder Level</span>
+                        <strong>${esc(p.reorder_level)}</strong>
+                    </div>
+                </div>
+
+                <div class="status-row">
+                    <span style="font-size:12px;color:#64748b">Stock Status</span>
+                    <span class="status ${status.key}">${status.label}</span>
+                </div>
+
+                <div class="card-links">
+                    <a href="update.html?id=${id}">✏️ Update</a>
+                    <a href="delete.html?id=${id}" class="delete-link">🗑️ Delete</a>
+                </div>
+            </div>
+        </article>`;
+    }).join("");
+}
+
+function applyFilters() {
+    const term = termInput.value.trim().toLowerCase();
+    const selectedStock = stockFilter.value;
+
+    let filtered = allProducts.filter(function(p) {
+        const name = String(p.product_name ?? "").toLowerCase();
+        const id = String(p.product_id ?? "").toLowerCase();
+
+        const matchesSearch = !term ||
+            id === term || id.includes(term) || name.includes(term);
+
+        const matchesStock = selectedStock === "all" ||
+            getStatus(p).key === selectedStock;
+
+        return matchesSearch && matchesStock;
+    });
+
+    switch (sortBy.value) {
+        case "name-asc":
+            filtered.sort((a,b) => String(a.product_name).localeCompare(String(b.product_name)));
+            break;
+        case "name-desc":
+            filtered.sort((a,b) => String(b.product_name).localeCompare(String(a.product_name)));
+            break;
+        case "price-low":
+            filtered.sort((a,b) => Number(a.product_price)-Number(b.product_price));
+            break;
+        case "price-high":
+            filtered.sort((a,b) => Number(b.product_price)-Number(a.product_price));
+            break;
+        case "stock-high":
+            filtered.sort((a,b) => Number(b.product_quality)-Number(a.product_quality));
+            break;
+        case "stock-low":
+            filtered.sort((a,b) => Number(a.product_quality)-Number(b.product_quality));
+            break;
+        default:
+            filtered.sort((a,b) => Number(b.product_id)-Number(a.product_id));
+    }
+
+    renderProducts(filtered);
+}
+
+async function loadProducts() {
+    resultBox.innerHTML = '<div class="message">⏳ Loading products...</div>';
+    resultCount.textContent = "Please wait...";
+
+    try {
+        const response = await fetch("/api/products");
+        if (!response.ok) throw new Error("Could not fetch products");
+
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error("Unexpected API response");
+
+        allProducts = data;
+        applyFilters();
+    } catch (error) {
+        resultBox.innerHTML = `
+            <div class="message">
+                <div style="font-size:36px">⚠️</div>
+                <strong>Unable to load products.</strong>
+                <p>Start your Node.js server and check your MySQL connection.</p>
+            </div>`;
+        resultCount.textContent = "Connection error";
+    }
+}
+
+document.getElementById("searchBtn").addEventListener("click", applyFilters);
+termInput.addEventListener("input", applyFilters);
+termInput.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") applyFilters();
+});
+stockFilter.addEventListener("change", applyFilters);
+sortBy.addEventListener("change", applyFilters);
+
+document.getElementById("resetBtn").addEventListener("click", function() {
+    termInput.value = "";
+    stockFilter.value = "all";
+    sortBy.value = "newest";
+    applyFilters();
+});
+
+document.getElementById("refreshBtn").addEventListener("click", loadProducts);
+
+loadProducts();
+</script>
+
+</body>
+</html>
